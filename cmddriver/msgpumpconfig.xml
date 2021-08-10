@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MsgPump>
+    <BROKER>
+        <ip>172.29.25.144</ip>
+        <port>6379</port>
+        <user>lifei</user>
+        <pwd>lifei</pwd>
+    </BROKER>
+    <LOOPQUERY>        
+        <topic>QC</topic>
+        <reptm>2.2</reptm>        
+        <topic>RTG</topic>
+        <reptm>1.2</reptm> 
+        <topic>AIV</topic>
+        <reptm>0.005</reptm>
+        <topic>ITRUCK</topic>
+        <reptm>0.1</reptm>
+    </LOOPQUERY>
+    <CMDASK>        
+        <topic>CNTR</topic>
+        <reptm>0</reptm>                
+        <topic>QCTASK</topic>
+        <reptm>0</reptm>         
+        <topic>RTGTASK</topic>
+        <reptm>0</reptm>         
+        <topic>VTASK</topic>
+        <reptm>0</reptm>         
+        <topic>TASKID</topic>
+        <reptm>0</reptm>     
+        <topic>TASKSTATUS</topic>
+        <reptm>0</reptm> 
+    </CMDASK>    
+</MsgPump>
