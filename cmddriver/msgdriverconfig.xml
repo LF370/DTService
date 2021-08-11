@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MsgPump>
-    <BROKER>
+    <PUBLISHBROKER tag="轮询命令推送">
         <ip>172.29.25.144</ip>
         <port>6379</port>
         <user>lifei</user>
         <pwd>lifei</pwd>
-    </BROKER>
+    </PUBLISHBROKER>
+
+    <SUBSCRIBEROKER tag="监听控制端命令">
+        <ip>172.29.25.144</ip>
+        <port>6379</port>
+        <user>lifei</user>
+        <pwd>lifei</pwd>
+    </SUBSCRIBEROKER>
+
+
     <LOOPQUERY>        
         <topic>QC</topic>
         <reptm>2.2</reptm>        

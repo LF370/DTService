@@ -15,14 +15,15 @@
 #include<tinyxml.h>
 using namespace std;
 
-#define BROKER_NODE "BROKER"
+#define PUBLISH_BROKER_NODE "PUBLISHBROKER"
+#define SUBSCRIBE_BROKE_NODE "SUBSCRIBEBROKE"
 #define LOOPQUERY_NODE "LOOPQUERY"
 #define CMDQUERY_NODE "CMDASK"
 
 class MsgPumpConfig
 {
 public:
-     const map<string,string>& getBrokerConf() const { return m_broker_set; }
+     const map<string,string>& getBrokerConf( int flag = 1) const { return flag == 1? m_pbroker_set: m_sbroker_set; }
      const map<string,double>& getLoopquerypara() const  { return m_loop_query_map; }
      const map<string,double>& getCmdquerypara() const  { return m_cmd_query_map; }
 
@@ -33,7 +34,11 @@ public:
 
 protected:    
     // 基本登录信息
-    map<string,string> m_broker_set;
+    // 命令发布
+    map<string,string> m_pbroker_set;
+    
+    // 命令收听
+    map<string,string> m_sbroker_set;
    
 
     // 信息频道

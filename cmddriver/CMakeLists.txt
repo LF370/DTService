@@ -4,7 +4,7 @@ project(cmddriver)
  
  
 #设定编译参数
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -Wall -std=c++17 -pthread -g -march=native")
 set(CMAKE_BUILD_TYPE "Debug")
  
 #设定源码列表.cpp
@@ -32,6 +32,8 @@ link_directories(/usr/lib/x86_64-linux-gnu)
 #add_library(动/静态链接库名称  SHARED/STATIC(可选，默认STATIC)  源码列表)
 #可以单独生成多个模块
 
+#set_target_properties(${PROJECT_NAME} PROPERTIES 
+#COMPILE_FEATURES "-pthread" LINK_FLAGS "-pthread")
  
 #生成可执行文件
 #add_executable( IOTService   main.cpp msgengine.cpp msgpump.cpp msgpumpconf.cpp )
@@ -58,3 +60,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${REDIS_PLUS_PLUS_HEADER})
 find_library(REDIS_PLUS_PLUS_LIB redis++)
 message(STATUS "->"  ${REDIS_PLUS_PLUS_LIB} )
 target_link_libraries(${PROJECT_NAME} ${REDIS_PLUS_PLUS_LIB})
+
+
+
+#target_link_libraries(${PROJECT_NAME} PUBLIC pthread)

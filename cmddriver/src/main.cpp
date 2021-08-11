@@ -2,7 +2,7 @@
 #include<iostream>
 #include<algorithm>
 #include<iterator>
-#include"msgpumpconf.h"
+#include"msgdriverconf.h"
 #include"msgpump.h"
 
 using namespace std;

@@ -1,4 +1,4 @@
-#include"msgpumpconf.h"
+#include"msgdriverconf.h"
 
 
    
@@ -20,17 +20,30 @@ bool MsgPumpConfig::readConfig()
     }
     
     
-    TiXmlNode* broker = root->FirstChild(BROKER_NODE);                
+    TiXmlNode* broker = root->FirstChild(PUBLISH_BROKER_NODE);                
         
     while( broker )
     {  
         for( TiXmlNode *child = broker->FirstChild();child; child = child->NextSibling() )
         {
-            m_broker_set.insert( make_pair(child->Value(), child->ToElement()->GetText() ));                
+            m_pbroker_set.insert( make_pair(child->Value(), child->ToElement()->GetText() ));                
         }
         
-        broker = broker->ToElement()->NextSibling(BROKER_NODE);
+        broker = broker->ToElement()->NextSibling(PUBLISH_BROKER_NODE);
     }
+
+    broker = root->FirstChild(SUBSCRIBE_BROKE_NODE);                
+        
+    while( broker )
+    {  
+        for( TiXmlNode *child = broker->FirstChild();child; child = child->NextSibling() )
+        {
+            m_sbroker_set.insert( make_pair(child->Value(), child->ToElement()->GetText() ));                
+        }
+        
+        broker = broker->ToElement()->NextSibling(SUBSCRIBE_BROKE_NODE);
+    }
+
 
     // 获取轮询指令参数
     TiXmlNode* channel = root->FirstChild(LOOPQUERY_NODE);

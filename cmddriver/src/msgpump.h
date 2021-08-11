@@ -7,12 +7,16 @@
 #include<iostream>
 #include<memory>
 #include<ev.h>
-#include"msgpumpconf.h"
+#include"msgdriverconf.h"
 #include"msgengine.h"
+#include "msglisten.h"
+
+
 
 
 using namespace std;
 
+typedef shared_ptr<IMsgListener> IMsgListener_PTR;
 
 typedef shared_ptr<IMsgEngine> IMsgEngine_PTR;
 
@@ -36,19 +40,29 @@ public:
     
     // 停机
     void stop();
+
+    // 捕获来自ask 命令监听器的指令
+    void receiveAskSignal( string _ask_topic );
     
 protected:
 
     // 定时回调函数
     static void pump_cb(EV_P_ ev_timer* w, int revents);
+
+    //static void signal_cb( EV_P_ ev_signal* w, int revents );
     
     protected:
     EV_P;
     
-    // 监听器
+    // 轮询 监听器
     // key:topic
     // value:监听者    
-    vector<ev_timer> m_rep_watcher_map;   
+    vector<ev_timer> m_rep_watchers;   
+
+    // 命令信号监听
+    //vector<ev_signal> m_signal_watchers;
+
+
 
     int m_start_tm;
     int m_repeate_tm;
@@ -57,7 +71,15 @@ protected:
 
     // 引擎集
     // 每个频道一个引擎
-    static std::vector<IMsgEngine_PTR> m_msg_engines;
+    // 轮询专用
+    static std::vector<IMsgEngine_PTR> m_loopmsg_engines;
+
+    // ASK 指令专用
+    static std::vector<IMsgEngine_PTR> m_askmsg_engines;
+
+    
+    // ASK命令监听器
+    IMsgListener_PTR m_askmsg_listener;
 
 
     
