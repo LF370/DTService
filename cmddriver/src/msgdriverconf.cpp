@@ -1,17 +1,27 @@
 #include"msgdriverconf.h"
+#include<filesystem>
+#include<unistd.h>
+
 
 
    
 bool MsgPumpConfig::readConfig()
 {
+    char buffer[1024]={0};
+    getcwd(buffer,1024);
+    string cwd = buffer;
+    cout<< cwd << endl;
+    
+    
     TiXmlDocument doc;
-    bool ret = doc.LoadFile("msgpumpconfig.xml");
+    string xml_file = "msgdriverconfig.xml";
+    bool ret = doc.LoadFile(xml_file);
     if( !ret )
     {           
         return false;
     }
     
-        TiXmlDeclaration* pt = doc.ToDeclaration();
+    doc.ToDeclaration();
 
     TiXmlElement *root = doc.RootElement();
     if( !root )
@@ -19,6 +29,17 @@ bool MsgPumpConfig::readConfig()
         return false;
     }
     
+    TiXmlNode* broker1 = root->FirstChild(SUBSCRIBE_BROKE_NODE); 
+    while( broker1 )
+    {  
+        for( TiXmlNode *child = broker1->FirstChild();child; child = child->NextSibling() )
+        {
+            m_sbroker_set.insert( make_pair(child->Value(), child->ToElement()->GetText() ));                
+        }
+        
+        broker1 = broker1->ToElement()->NextSibling(SUBSCRIBE_BROKE_NODE);
+    }
+
     
     TiXmlNode* broker = root->FirstChild(PUBLISH_BROKER_NODE);                
         
@@ -32,17 +53,6 @@ bool MsgPumpConfig::readConfig()
         broker = broker->ToElement()->NextSibling(PUBLISH_BROKER_NODE);
     }
 
-    broker = root->FirstChild(SUBSCRIBE_BROKE_NODE);                
-        
-    while( broker )
-    {  
-        for( TiXmlNode *child = broker->FirstChild();child; child = child->NextSibling() )
-        {
-            m_sbroker_set.insert( make_pair(child->Value(), child->ToElement()->GetText() ));                
-        }
-        
-        broker = broker->ToElement()->NextSibling(SUBSCRIBE_BROKE_NODE);
-    }
 
 
     // 获取轮询指令参数

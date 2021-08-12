@@ -22,7 +22,7 @@ include_directories(/usr/local/include/)
 link_directories(/usr/lib/x86_64-linux-gnu)
  
 
- 
+   
 #添加子目录,作用相当于进入子目录里面，展开子目录的CMakeLists.txt
 #同时执行，子目录中的CMakeLists.txt一般是编译成一个库，作为一个模块
 #在父目录中可以直接引用子目录生成的库

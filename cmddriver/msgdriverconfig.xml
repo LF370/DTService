@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <MsgPump>
     <PUBLISHBROKER tag="轮询命令推送">
-        <ip>172.29.25.144</ip>
+        <ip>127.0.0.1</ip>
         <port>6379</port>
         <user>lifei</user>
         <pwd>lifei</pwd>
-    </PUBLISHBROKER>
-
-    <SUBSCRIBEROKER tag="监听控制端命令">
-        <ip>172.29.25.144</ip>
-        <port>6379</port>
+    </PUBLISHBROKER>    
+    <SUBSCRIBEBROKE>
+        <ip>127.0.0.1</ip>
+        <port>6380</port>
         <user>lifei</user>
         <pwd>lifei</pwd>
-    </SUBSCRIBEROKER>
-
-
+    </SUBSCRIBEBROKE>
     <LOOPQUERY>        
         <topic>QC</topic>
         <reptm>2.2</reptm>        
@@ -23,7 +20,7 @@
         <topic>AIV</topic>
         <reptm>0.005</reptm>
         <topic>ITRUCK</topic>
-        <reptm>0.1</reptm>
+        <reptm>0.005</reptm>
     </LOOPQUERY>
     <CMDASK>        
         <topic>CNTR</topic>

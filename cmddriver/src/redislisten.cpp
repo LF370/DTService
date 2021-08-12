@@ -34,7 +34,7 @@ RedisListener::~RedisListener()
     
 void RedisListener::init()
 {
-    auto broker_map = g_msgpump_conf.getBrokerConf();
+    auto broker_map = g_msgpump_conf.getBrokerConf(2);
 
     string broke_ip = broker_map["ip"];
     string broke_port = broker_map["port"];
@@ -55,13 +55,23 @@ bool RedisListener::connect()
         ConnectionOptions redis_conn_opt;
         redis_conn_opt.host = m_server_address;
         redis_conn_opt.port = stoul(m_port);   
-        redis_conn_opt.db = 1;
+        
+        //redis_conn_opt.db = 1;
         // 完成链接
         m_redis_client = make_shared<Redis>(redis_conn_opt);    
+        
         m_subscriber = std::make_shared<Subscriber>( m_redis_client->subscriber());
+
+        auto askcmd = g_msgpump_conf.getCmdquerypara();
+        for( auto itr = askcmd.begin(); itr != askcmd.end(); ++itr )
+        {
+            m_subscriber->subscribe( itr->first );
+        }
+
         
         m_subscriber->on_message( [this]( string channel, string msg)
         {
+            cout << "on ask cmd arrived...."<< channel << endl;
             action(channel);
         });
         }
@@ -96,6 +106,7 @@ void RedisListener::listening()
     {
         try{
             m_subscriber->consume();
+           // cout <<"接收到一条指令........"<<endl;
         }catch( const TimeoutError& e)
         {
             continue;

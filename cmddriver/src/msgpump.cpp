@@ -62,7 +62,9 @@ int MsgPump::assemblyMsgEngine( )
     // 通过配置文件获取服务地址，IP 密码等
     // 以及配套的主题
     // 这里先简单设定固定值   
-    auto channel_map = g_msgpump_conf.getLoopquerypara();      
+    auto channel_map = g_msgpump_conf.getLoopquerypara();     
+
+    cout <<"We will build "<<channel_map.size() << "loop engine" <<endl;
 
     //组装轮询引擎    
     
@@ -80,6 +82,7 @@ int MsgPump::assemblyMsgEngine( )
      channel_map = g_msgpump_conf.getCmdquerypara();     
 
     //组装ASK引擎    
+    cout <<"We will build "<<channel_map.size() << "ask engine" <<endl;
     
     // 每个频道一个引擎
     m_askmsg_engines.resize( channel_map.size() );
@@ -151,7 +154,7 @@ void MsgPump::receiveAskSignal( string _ask_topic )
 }
 void MsgPump::start()
 {
-    // 轮询监听启动
+    //轮询监听启动
     for( auto itr = m_rep_watchers.begin(); itr != m_rep_watchers.end(); ++itr )
     {
         auto& ev_tm = *itr;
@@ -169,6 +172,7 @@ void MsgPump::start()
     thread t(bind(&RedisListener::listening, dynamic_cast<RedisListener*>(m_askmsg_listener.get() )) );
     t.detach();
 
+    
     
     ev_run(EV_A_ 0 );
 }

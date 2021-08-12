@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "tj-iecs-jar/soms-digital-twin-1.3.3-SNAPSHOT.jar"
+    ]
+}
